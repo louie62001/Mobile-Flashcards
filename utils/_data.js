@@ -7,7 +7,7 @@ let decks = {
           answer: true
         },
         {
-          question: 'hello world',
+          question: 'React is a newer version of angular?',
           answer: true
         }
       ]
@@ -18,6 +18,19 @@ let decks = {
         {
           question: 'Javasciprt is the same as java?',
           answer: false
+        }
+      ]
+    },
+    HTML: {
+      title: 'HTML',
+      questions: [
+        {
+          question: 'What does HTML stand for?',
+          answer: 'HyperText Markup Language'
+        },
+        {
+          question: 'HTML uses tags to build webpages?',
+          answer: true
         }
       ]
     }

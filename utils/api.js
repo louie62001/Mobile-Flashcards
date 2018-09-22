@@ -11,25 +11,13 @@ export function getInitialData () {
   }))
 }
 
-export function getDecks () {
-    debugger
-    return Promise.all([
-        _getDecks()
-    ]).then(([decks]) => ({
-        decks
-    }))
-}
-
 export function getDeck (id) {
 
 }
 
 export function saveTitle (title) {
-    debugger
-    AsyncStorage.setItem(DECK_KEY, title)
-    .then((value) => {
-        return value
-    })
+    //debugger
+    //return AsyncStorage.mergeItem(DECK_KEY, title)
 }
 
 export function addCardToDeck (title, card) {
