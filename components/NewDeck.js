@@ -9,62 +9,42 @@ import {
 import { connect } from 'react-redux'
 import { createDeck } from '../actions'
 
+const ASYNC_KEY = 'MobileFlashcards:decks'
+
 class NewDeck extends Component {
     state = {
-        title: {
-            title: '',
-            questions: []
+        title: ''
+    }
+    save = (title) => {
+     this.props.dispatch(createDeck(title))
+     this.saveToStore(title)
+     this.props.navigation.navigate('Deck', {deck: title, cards: 0})
+     this.textInput.clear()
+
+    }
+    saveToStore (title) {
+        try {
+            //await AsyncStorage.removeItem('@MobileCards')
+           AsyncStorage.setItem('name', JSON.stringify(title))
+        } catch (error) {
+            alert(error)
         }
     }
-
-    async componentDidMount() {
-        try {
-                let deck = await AsyncStorage.getItem('@MobileCards')
-                alert(deck)
-                console.log('from promise in new deck', deck)
-                this.setState(JSON.parse(deck))
-                this.forceUpdate()
-            }
-                catch (error) {
-                {alert(error)}
-                }
-        //this.removeItem('@MobileCards')
-    }
-    saveTitle = (title) => {
-    debugger
-    this.props.dispatch(createDeck({
-        [title]: {
-        'title': title,
-        questions: []
-      }
-    }))
-    /*this.setState({
-      [title]: {
-        'title': title,
-        questions: []
-      }
-    }, () => console.log('after: ', this.state))*/
-    
-     AsyncStorage.setItem('@MobileCards', JSON.stringify(this.state))
-     this.props.navigation.navigate('DeckList', {params: this.state})
-  }
     render() {
         const {title} = this.state
-        const {onSubmit} = this.props
         return (
-            <KeyboardAvoidingView behavior='padding'>
-                <Text>Enter new deck title</Text>
+            <KeyboardAvoidingView behavior='padding' style={{flex: 1, margin: 30}}>
+                <Text style={{alignContent: 'center'}}>Enter new deck title</Text>
                 <TextInput 
                   style={{height: 30, borderColor: 'gray', borderWidth: 1, padding: 5}}
                   onChangeText={(title) => this.setState({title})}
                   value={title}
                   underlineColorAndroid='transparent'
                   placeholder='Enter title'
-                  /*onSubmitEditing={(item) => this.setState({title: ''})}*/
+                  ref={input => { this.textInput = input }}
                 />
-                <Text>{JSON.stringify(title)}</Text>
-                <TouchableOpacity onPress={(item) => this.saveTitle(title)}> 
-                    <Text style={{fontSize: 25}}>Create deck</Text>
+                <TouchableOpacity onPress={(item) => this.save(title)} style={{backgroundColor: 'black', padding: 10, margin: 10}}> 
+                    <Text style={{fontSize: 25, color: 'white', justifyContent: 'center', alignContent: 'center', alignItems: 'center'}}>Create deck</Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
         )

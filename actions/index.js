@@ -6,18 +6,17 @@ import { getInitialData } from '../utils/api'
 
 
 export function handleInitialData () {
-    debugger
+    //debugger
     return (dispatch) => {
         return getInitialData()
 	      .then(({decks}) => {
-              debugger
 	        dispatch(receiveDecks(decks))
           })
     }
 }
 
 export function receiveDecks (decks) {
-    debugger
+    //debugger
     return {
         type: GET_DECKS,
         decks
@@ -32,16 +31,17 @@ export function receiveDeck (deck) {
 }
 
 export function createDeck (title) {
-    debugger
+    //debugger
     return {
         type: CREATE_DECK,
         title
     }
 }
 
-export function addCard (question) {
+export function addCardToDeck (title, card) {
     return {
         type: ADD_CARD,
-        question
+        title,
+        card
     }
 }

@@ -1,16 +1,19 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, AsyncStorage } from 'react-native'
-import { createBottomTabNavigator } from 'react-navigation'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
+import { StyleSheet, Text, View } from 'react-native'
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
+import { compose, createStore } from 'redux'
+import { Provider, AsyncStorage } from 'react-redux'
+//import { persistStore, autorehydrate } from 'redux-persist'
 import reducer from './reducers'
-import { handleInitialData } from './actions'
+import middleware from './middleware'
 import NewDeck from './components/NewDeck'
 import DeckList from './components/DeckList'
 import Deck from './components/Deck'
-import middleware from './middleware'
+import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
+import { setLocalNotification } from './utils/helpers'
 
-const Navigator = createBottomTabNavigator({
+const Tabs = createBottomTabNavigator({
   DeckList: {
     screen: DeckList
   }, 
@@ -19,13 +22,40 @@ const Navigator = createBottomTabNavigator({
   }
 })
 
-class App extends React.Component {
+const MainNavigator = createStackNavigator({
+  Home: {
+    screen: Tabs,
+      navigationOptions: {
+       header: null 
+      }
+  },
+  Deck: {
+    screen: Deck,
+  },
+  AddCard: {
+    screen: AddCard,
+      navigationOptions: {
+        headerTitle: 'Add Card'
+      }
+  },
+  Quiz: {
+    screen: Quiz,
+      navigationOptions: {
+        headerTitle: 'Quiz'
+      }
+  }
+})
 
+class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
   render() {
-    //debugger
+    //const store = createStore(reducer, compose(middleware, autorehydrate()))
+    //persistStore(store, { storage: AsyncStorage})
     return (
       <Provider store={createStore(reducer, middleware)}>
-        <Navigator />
+        <MainNavigator />
       </Provider>
     )
   }

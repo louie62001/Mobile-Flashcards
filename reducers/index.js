@@ -1,7 +1,6 @@
 import { GET_DECKS, GET_DECK, ADD_CARD, CREATE_DECK  } from '../actions'
 
 function flashcards (state = {}, action) {
-    debugger
     switch (action.type) {
         case GET_DECKS :
             return {
@@ -14,8 +13,18 @@ function flashcards (state = {}, action) {
                 ...action.deck
             }
         case ADD_CARD :
-            return {}
+            const { title } = action
+            return {
+                ...state,
+                [title]: {
+                        title: title,
+                         questions: [
+                             ...state[title].questions.concat([action.card])
+                            ]
+                }
+            }
         case CREATE_DECK :
+        //debugger
             return  {
                 ...state,
                 [action.title]: {
