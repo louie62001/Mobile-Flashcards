@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, AsyncStorage } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
 class Deck extends Component {
@@ -10,24 +10,15 @@ class Deck extends Component {
             title: `${deck}`
         }        
     }
-    /*async componentDidMount() {
-     try {
-            let deck = await AsyncStorage.getItem('@MobileCards')
-            debugger
-            alert(deck)
-            console.log('from promise', deck)
-            this.setState(JSON.parse(deck))
-          }
-           catch (error) {
-             {alert(error)}
-           }
-  }*/
+
     addCard (deck, cards) {
         this.props.navigation.navigate('AddCard', {deck: deck, cards: cards})
     }
+
     quiz (deck, cards) {
         this.props.navigation.navigate('Quiz', {deck: deck, cards: cards})
     }
+
     render() {
         const {deck} = this.props.navigation.state.params
         const {cards} = this.props

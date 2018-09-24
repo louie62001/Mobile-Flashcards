@@ -1,9 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation'
-import { compose, createStore } from 'redux'
-import { Provider, AsyncStorage } from 'react-redux'
-//import { persistStore, autorehydrate } from 'redux-persist'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 import reducer from './reducers'
 import middleware from './middleware'
 import NewDeck from './components/NewDeck'
@@ -51,11 +50,11 @@ class App extends React.Component {
     setLocalNotification()
   }
   render() {
-    //const store = createStore(reducer, compose(middleware, autorehydrate()))
-    //persistStore(store, { storage: AsyncStorage})
     return (
       <Provider store={createStore(reducer, middleware)}>
+       <View style={{flex: 1}}>
         <MainNavigator />
+       </View>
       </Provider>
     )
   }

@@ -1,25 +1,40 @@
-import { AsyncStorage } from 'react-native'
 import { _getDecks } from './_data'
+import { AsyncStorage } from 'react-native'
+import { FLASHCARDS_KEY } from './helpers'
 
-const DECK_KEY = 'mobileFlashcards:decks'
+export function saveDeckTitle (title) {
+  debugger
+  try {
+        AsyncStorage.mergeItem(FLASHCARDS_KEY, JSON.stringify({
+            [title]: {
+                title: title,
+                questions: []
+            }
+        }))
+  } catch (error) {
+        alert(error)
+  }
+}
+
+export function addCardToDeck (title, card, state) {
+  debugger
+  try {
+        AsyncStorage.mergeItem(FLASHCARDS_KEY, JSON.stringify({
+            [title]: {
+                questions: [
+                            ...state.concat(card)
+                ]
+            }
+        }))
+  } catch (error) {
+        alert(error)
+  }
+}
 
 export function getInitialData () {
   return Promise.all([
-      _getDecks(),
+    _getDecks(),
   ]).then(([decks]) => ({
 	decks,
   }))
-}
-
-export function getDeck (id) {
-
-}
-
-export function saveTitle (title) {
-    //debugger
-    //return AsyncStorage.mergeItem(DECK_KEY, title)
-}
-
-export function addCardToDeck (title, card) {
-
 }

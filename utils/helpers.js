@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native'
 import { Notifications, Permissions} from 'expo'
 
+export const FLASHCARDS_KEY = 'cards'
 const NOTIFICATION_KEY = 'MobileFlashcards:notifications'
 
 export function clearLocalNotification () {
@@ -29,7 +30,7 @@ export function setLocalNotification () {
     AsyncStorage.getItem(NOTIFICATION_KEY)
       .then(JSON.parse)
       .then((data) => {
-          debugger
+          //debugger
           if(data === null) {
               Permissions.askAsync(Permissions.NOTIFICATIONS)
                 .then(({ status }) => {

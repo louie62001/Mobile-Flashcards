@@ -36,12 +36,9 @@ class Quiz extends Component {
         showAnswer: false,
         score: 0
     }
-    clearReminder() {
-        clearLocalNotification()
-    }
+
     correct(index, questionCount, score) {
         //debugger
-        const {questions} = this.props
         this.setState((state) => {
             return {
             ...state,
@@ -50,11 +47,10 @@ class Quiz extends Component {
             score: score + 1
             }
         })
-        this.clearReminder()
+        clearLocalNotification()
     }
     incorrect(index, questionCount) {
         //debugger
-        const {questions} = this.props
         this.setState((state) => {
             return {
             ...state,
@@ -62,7 +58,7 @@ class Quiz extends Component {
             questionCount: questionCount + 1
             }
         })
-        this.clearReminder()
+        clearLocalNotification()
     }
     reset() {
         this.setState(() => {

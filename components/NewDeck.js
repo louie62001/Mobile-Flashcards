@@ -1,34 +1,26 @@
 import React, { Component } from 'react'
 import { 
-    View,
     Text, 
     TouchableOpacity, 
     TextInput, 
-    KeyboardAvoidingView, 
-    AsyncStorage } from 'react-native'
+    KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
 import { createDeck } from '../actions'
-
-const ASYNC_KEY = 'MobileFlashcards:decks'
+import { saveDeckTitle } from '../utils/api';
 
 class NewDeck extends Component {
     state = {
         title: ''
     }
     save = (title) => {
-     this.props.dispatch(createDeck(title))
-     this.saveToStore(title)
-     this.props.navigation.navigate('Deck', {deck: title, cards: 0})
-     this.textInput.clear()
+        this.props.dispatch(createDeck(title))
+        //debugger
+        
+        saveDeckTitle(title)
 
-    }
-    saveToStore (title) {
-        try {
-            //await AsyncStorage.removeItem('@MobileCards')
-           AsyncStorage.setItem('name', JSON.stringify(title))
-        } catch (error) {
-            alert(error)
-        }
+        this.props.navigation.navigate('Deck', {deck: title, cards: 0})
+     
+        this.textInput.clear()
     }
     render() {
         const {title} = this.state

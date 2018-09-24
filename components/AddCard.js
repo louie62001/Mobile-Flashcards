@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
 import { 
-    View,
     Text, 
     TouchableOpacity, 
     TextInput, 
-    KeyboardAvoidingView, 
-    AsyncStorage } from 'react-native'
+    KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
-import { addCardToDeck } from '../actions'
-
-const ASYNC_KEY = 'MobileFlashcards:decks'
+import { saveCard } from '../actions'
+import { addCardToDeck } from '../utils/api'
 
 class AddCard extends Component {
     state = {
@@ -17,8 +14,15 @@ class AddCard extends Component {
         answer: ''
     }
     save = (title, card) => {
-     this.props.dispatch(addCardToDeck(title, card))
-     this.props.navigation.navigate('Deck', { deck: title })
+        const {decks} = this.props
+        //debugger
+        const state = decks[title].questions
+
+        this.props.dispatch(saveCard(title, card))
+
+        addCardToDeck(title, card, state)
+
+        this.props.navigation.navigate('Deck', { deck: title })
     }
     render() {
         const card = this.state
@@ -43,7 +47,7 @@ class AddCard extends Component {
                   ref={input => { this.textInput = input }}
                 />
                 <TouchableOpacity onPress={(deckTitle, cardInfo) => this.save(deck, card)} style={{backgroundColor: 'black', padding: 10, margin: 10}}> 
-                    <Text style={{fontSize: 25, color: 'white'}}>Create deck</Text>
+                    <Text style={{fontSize: 25, color: 'white'}}>Add Card</Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
         )
