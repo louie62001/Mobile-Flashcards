@@ -10,11 +10,11 @@ import { FLASHCARDS_KEY } from '../utils/helpers';
 export function handleInitialData () {
     //debugger
     return (dispatch) => {
-        //AsyncStorage.removeItem(FLASHCARDS_KEY)
         return getInitialData()
 	      .then(({decks}) => {
             AsyncStorage.getItem(FLASHCARDS_KEY)
               .then(results => {
+                  debugger
                 if(results !== null) {
                     dispatch(receiveDecks(JSON.parse(results)))
                     AsyncStorage.mergeItem(FLASHCARDS_KEY, JSON.stringify(JSON.parse(results)))

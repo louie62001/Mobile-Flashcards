@@ -8,7 +8,7 @@ let decks = {
         },
         {
           question: 'React is a newer version of angular?',
-          answer: true
+          answer: false
         }
       ]
     },
@@ -16,7 +16,7 @@ let decks = {
       title: 'Javascript',
       questions: [
         {
-          question: 'Javasciprt is the same as java?',
+          question: 'Javascript is java?',
           answer: false
         }
       ]
