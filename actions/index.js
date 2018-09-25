@@ -14,7 +14,7 @@ export function handleInitialData () {
 	      .then(({decks}) => {
             AsyncStorage.getItem(FLASHCARDS_KEY)
               .then(results => {
-                  debugger
+                //debugger
                 if(results !== null) {
                     dispatch(receiveDecks(JSON.parse(results)))
                     AsyncStorage.mergeItem(FLASHCARDS_KEY, JSON.stringify(JSON.parse(results)))
